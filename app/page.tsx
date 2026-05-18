@@ -147,20 +147,31 @@ function BlazeApp() {
       <main className="max-w-5xl mx-auto px-4 py-6">
         {/* Empty state */}
         {!search && !isLoading && (
-          <div className="flex flex-col items-center justify-center py-20 text-center">
+          <div className="relative flex flex-col items-center justify-center py-24 text-center overflow-hidden">
+            {/* Aurora radial glow */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "radial-gradient(ellipse 60% 50% at 50% 80%, rgba(251,146,60,0.10) 0%, rgba(245,158,11,0.06) 40%, transparent 70%)",
+                pointerEvents: "none",
+              }}
+            />
             <Mountain
               size={52}
-              className="mb-4"
-              style={{ color: "var(--text-faint)" }}
+              className="mb-5 relative"
+              style={{ color: "var(--border-active)" }}
             />
             <h2
-              className="text-2xl font-black mb-2"
+              className="text-2xl font-black mb-2 relative"
               style={{ color: "var(--text-primary)" }}
             >
               Is the summit worth it?
             </h2>
             <p
-              className="text-sm max-w-sm"
+              className="text-sm max-w-sm relative"
               style={{ color: "var(--text-muted)" }}
             >
               Search any trail, peak, or city to get a 7-day sunrise and sunset
@@ -172,10 +183,7 @@ function BlazeApp() {
         {/* Loading */}
         {isLoading && (
           <div className="space-y-4">
-            <div
-              className="h-7 w-40 rounded-lg animate-pulse"
-              style={{ background: "var(--bg-surface)" }}
-            />
+            <div className="skeleton h-7 w-40" />
             <div
               className="grid gap-3"
               style={{
@@ -183,11 +191,7 @@ function BlazeApp() {
               }}
             >
               {Array.from({ length: 7 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="h-32 rounded-xl animate-pulse"
-                  style={{ background: "var(--bg-surface)" }}
-                />
+                <div key={i} className="skeleton h-32 rounded-xl" />
               ))}
             </div>
           </div>
