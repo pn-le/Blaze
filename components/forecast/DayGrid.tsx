@@ -11,7 +11,10 @@ interface DayGridProps {
 
 export function DayGrid({ days, selectedIndex, onSelect }: DayGridProps) {
   return (
-    <div className="grid gap-3" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))" }}>
+    <div
+      className="grid gap-3 stagger-children"
+      style={{ gridTemplateColumns: "repeat(auto-fill, minmax(155px, 1fr))" }}
+    >
       {days.map((day, i) => (
         <DayCard
           key={day.dateStr}

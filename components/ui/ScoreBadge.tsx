@@ -17,9 +17,9 @@ export function ScoreBadge({
   const { label, emoji } = scoreLabel(score);
 
   const sizeClasses = {
-    sm: "text-lg font-black",
-    md: "text-3xl font-black",
-    lg: "text-5xl font-black",
+    sm: "text-xl font-black tabular-nums",
+    md: "text-3xl font-black tabular-nums",
+    lg: "text-5xl font-black tabular-nums",
   };
 
   const labelSizes = {
@@ -30,7 +30,13 @@ export function ScoreBadge({
 
   return (
     <div className="flex flex-col items-center gap-0.5">
-      <span className={sizeClasses[size]} style={{ color }}>
+      <span
+        className={sizeClasses[size]}
+        style={{
+          color,
+          textShadow: `0 0 20px ${color}55`,
+        }}
+      >
         {score}
       </span>
       {showLabel && (
