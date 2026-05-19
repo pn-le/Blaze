@@ -196,6 +196,39 @@ p {
   border-radius: 4px;
 }
 
+/* Aurora orb drift */
+@keyframes aurora-drift {
+  0%, 100% { transform: scale(1) translate(0%, 0%); }
+  25%       { transform: scale(1.06) translate(3%, -3%); }
+  50%       { transform: scale(1.03) translate(-2%, 4%); }
+  75%       { transform: scale(1.05) translate(-3%, -1%); }
+}
+
+.aurora-orb {
+  animation: aurora-drift 14s ease-in-out infinite;
+}
+
+/* Bar entrance */
+@keyframes bar-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.bar-fill {
+  transform-origin: left center;
+  animation: bar-grow 700ms cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+/* Pulsing glow for best-score rings */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50%       { box-shadow: 0 0 24px 4px var(--pulse-color, rgba(245,158,11,0.35)); }
+}
+
+.ring-pulse {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
 /* Respect motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up,
@@ -211,5 +244,11 @@ p {
 
   .day-card-btn:hover {
     transform: none;
+  }
+
+  .aurora-orb,
+  .bar-fill,
+  .ring-pulse {
+    animation: none;
   }
 }

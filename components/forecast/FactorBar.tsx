@@ -22,7 +22,7 @@ export function FactorBar({ label, value, rawLabel, color }: FactorBarProps) {
         </span>
       </div>
       <div
-        className="h-1.5 rounded-full overflow-hidden"
+        className="h-2 rounded-full overflow-hidden"
         style={{ background: "rgba(45,63,87,0.5)" }}
         role="progressbar"
         aria-valuenow={value}
@@ -30,14 +30,11 @@ export function FactorBar({ label, value, rawLabel, color }: FactorBarProps) {
         aria-label={label}
       >
         <div
-          className="h-full rounded-full"
+          className="h-full rounded-full bar-fill"
           style={{
             width: `${value}%`,
-            background: color,
-            boxShadow: isStrong ? `0 0 6px ${color}99` : "none",
-            transitionProperty: "width, box-shadow",
-            transitionDuration: "600ms",
-            transitionTimingFunction: "cubic-bezier(0.32, 0.72, 0, 1)",
+            background: `linear-gradient(90deg, ${color}cc, ${color})`,
+            boxShadow: isStrong ? `0 0 8px ${color}88` : "none",
           }}
         />
       </div>

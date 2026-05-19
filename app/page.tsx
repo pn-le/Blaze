@@ -131,7 +131,48 @@ function BlazeApp() {
       : null;
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg-base)" }}>
+    <div className="min-h-screen relative overflow-x-hidden" style={{ background: "var(--bg-base)" }}>
+      {/* Ambient aurora when results are loaded */}
+      {days.length > 0 && (
+        <div aria-hidden="true" className="pointer-events-none fixed inset-0 overflow-hidden" style={{ zIndex: 0 }}>
+          <div
+            className="aurora-orb absolute rounded-full"
+            style={{
+              width: "50vw",
+              height: "40vh",
+              top: "5%",
+              left: "-5%",
+              background: "radial-gradient(ellipse, rgba(251,146,60,0.06) 0%, transparent 70%)",
+              filter: "blur(60px)",
+            }}
+          />
+          <div
+            className="aurora-orb absolute rounded-full"
+            style={{
+              width: "40vw",
+              height: "35vh",
+              top: "40%",
+              right: "-5%",
+              background: "radial-gradient(ellipse, rgba(232,121,249,0.05) 0%, transparent 70%)",
+              filter: "blur(80px)",
+              animationDelay: "-5s",
+            }}
+          />
+          <div
+            className="aurora-orb absolute rounded-full"
+            style={{
+              width: "35vw",
+              height: "30vh",
+              bottom: "10%",
+              left: "30%",
+              background: "radial-gradient(ellipse, rgba(96,165,250,0.04) 0%, transparent 70%)",
+              filter: "blur(70px)",
+              animationDelay: "-9s",
+            }}
+          />
+        </div>
+      )}
+
       <Header />
 
       <SearchPanel
@@ -144,7 +185,7 @@ function BlazeApp() {
         defaultElevUnit={initUnit}
       />
 
-      <main className="max-w-5xl mx-auto px-4 py-6">
+      <main className="relative max-w-5xl mx-auto px-4 py-6" style={{ zIndex: 1 }}>
         {/* Empty state */}
         {!search && !isLoading && (
           <div className="relative flex flex-col items-center justify-center py-24 text-center overflow-hidden">
@@ -228,15 +269,15 @@ function BlazeApp() {
         {!isLoading && days.length > 0 && search && (
           <div className="space-y-4">
             {/* Location header + actions */}
-            <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <h2
-                  className="text-xl font-black"
+                  className="text-2xl font-black tracking-tight leading-none"
                   style={{ color: "var(--text-primary)" }}
                 >
                   {search.locationName}
                 </h2>
-                <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                <p className="text-xs mt-1.5 font-medium" style={{ color: "var(--text-muted)" }}>
                   7-day forecast · starts {search.startDate}
                   {summitDisplay ? ` · ${summitDisplay} summit` : ""}
                 </p>
@@ -245,10 +286,11 @@ function BlazeApp() {
                 <button
                   type="button"
                   onClick={handleSaveTrail}
-                  className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-colors hover:bg-white/5"
+                  className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-xl border transition-all hover:bg-white/5 cursor-pointer"
                   style={{
                     color: "var(--text-secondary)",
                     borderColor: "var(--border-default)",
+                    background: "rgba(255,255,255,0.02)",
                   }}
                 >
                   <Star size={12} />
@@ -257,12 +299,11 @@ function BlazeApp() {
                 <button
                   type="button"
                   onClick={handleShare}
-                  className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-colors hover:bg-white/5"
+                  className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-xl border transition-all hover:bg-white/5 cursor-pointer"
                   style={{
-                    color: shareSuccess
-                      ? "#22c55e"
-                      : "var(--text-secondary)",
-                    borderColor: "var(--border-default)",
+                    color: shareSuccess ? "#22c55e" : "var(--text-secondary)",
+                    borderColor: shareSuccess ? "rgba(34,197,94,0.4)" : "var(--border-default)",
+                    background: "rgba(255,255,255,0.02)",
                   }}
                 >
                   <Share2 size={12} />

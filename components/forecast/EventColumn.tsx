@@ -34,28 +34,42 @@ export function EventColumn({ label, iso, weather, score }: EventColumnProps) {
     <div
       className="rounded-2xl p-px"
       style={{
-        background: `linear-gradient(145deg, ${accent}28 0%, rgba(255,255,255,0.04) 50%, transparent 100%)`,
+        background: `linear-gradient(145deg, ${accent}35 0%, rgba(255,255,255,0.05) 50%, transparent 100%)`,
+        boxShadow: `0 0 40px ${accent}10`,
       }}
     >
       <div
-        className="rounded-[calc(1rem-1px)] p-4 space-y-4"
+        className="rounded-[calc(1rem-1px)] p-5 space-y-5"
         style={{
           background: "var(--bg-elevated)",
-          boxShadow: "inset 0 1px 1px rgba(255,255,255,0.06), inset 0 -1px 1px rgba(0,0,0,0.2)",
+          boxShadow: "inset 0 1px 1px rgba(255,255,255,0.07), inset 0 -1px 1px rgba(0,0,0,0.25)",
         }}
       >
-        {/* Header: label + ring */}
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-base font-bold flex items-center gap-1.5" style={{ color: "var(--text-primary)" }}>
+        {/* Header: label + lg ring */}
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <div
+              className="text-lg font-black flex items-center gap-2 tracking-tight"
+              style={{ color: "var(--text-primary)" }}
+            >
               <span aria-hidden="true">{emoji}</span>
               <span>{label}</span>
             </div>
-            <div className="text-xs tabular-nums mt-0.5" style={{ color: "var(--text-muted)" }}>
+            <div className="text-sm tabular-nums mt-1 font-medium" style={{ color: "var(--text-secondary)" }}>
               {formatTime(iso)}
             </div>
           </div>
-          <ScoreRing score={score} size="md" showLabel />
+          {/* Ring with ambient glow */}
+          <div className="relative flex-shrink-0">
+            <div
+              className="absolute inset-0 rounded-full blur-xl"
+              style={{ background: `${accent}30`, transform: "scale(1.4)" }}
+              aria-hidden="true"
+            />
+            <div className="relative">
+              <ScoreRing score={score} size="lg" showLabel />
+            </div>
+          </div>
         </div>
 
         {/* Factor bars */}

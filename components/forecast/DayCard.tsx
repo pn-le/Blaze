@@ -24,41 +24,45 @@ export function DayCard({ day, selected, onClick }: DayCardProps) {
       className="rounded-2xl p-px"
       style={{
         background: selected
-          ? `linear-gradient(135deg, ${accent}70 0%, ${accent}25 100%)`
-          : "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%)",
+          ? `linear-gradient(135deg, ${accent}80 0%, ${accent}30 60%, transparent 100%)`
+          : "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)",
         transitionProperty: "background, box-shadow",
-        transitionDuration: "300ms",
+        transitionDuration: "250ms",
         transitionTimingFunction: "cubic-bezier(0.32, 0.72, 0, 1)",
-        boxShadow: selected ? `0 0 32px ${accent}22` : "none",
+        boxShadow: selected ? `0 0 40px ${accent}30, 0 8px 32px rgba(0,0,0,0.4)` : "0 2px 8px rgba(0,0,0,0.2)",
       }}
     >
       <button
         type="button"
         onClick={onClick}
-        className="day-card-btn w-full text-left rounded-[calc(1rem-1px)] p-3"
+        className="day-card-btn w-full text-left rounded-[calc(1rem-1px)] p-4 cursor-pointer"
         style={{
-          background: selected ? "var(--bg-elevated)" : "var(--bg-surface)",
+          background: selected
+            ? `linear-gradient(160deg, ${accent}10 0%, var(--bg-elevated) 50%)`
+            : "var(--bg-surface)",
           boxShadow: selected
-            ? `inset 0 1px 1px rgba(255,255,255,0.07)`
+            ? `inset 0 1px 1px rgba(255,255,255,0.08)`
             : "inset 0 1px 1px rgba(255,255,255,0.03)",
           transitionProperty: "background, box-shadow, transform",
-          transitionDuration: "180ms",
+          transitionDuration: "200ms",
           transitionTimingFunction: "cubic-bezier(0.32, 0.72, 0, 1)",
-          cursor: "pointer",
         }}
       >
         {/* Date header */}
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-4">
           <div>
             <div
-              className="text-xs font-bold"
-              style={{ color: isToday ? "var(--border-active)" : "var(--text-secondary)" }}
+              className="text-sm font-black tracking-tight"
+              style={{ color: isToday ? "var(--border-active)" : "var(--text-primary)" }}
             >
               {isToday
                 ? "Today"
                 : new Date(day.dateStr + "T12:00:00").toLocaleDateString([], { weekday: "short" })}
             </div>
-            <div className="label-caps">
+            <div
+              className="text-[0.7rem] font-medium mt-0.5"
+              style={{ color: "var(--text-muted)" }}
+            >
               {new Date(day.dateStr + "T12:00:00").toLocaleDateString([], {
                 month: "short",
                 day: "numeric",
@@ -81,18 +85,18 @@ export function DayCard({ day, selected, onClick }: DayCardProps) {
         </div>
 
         {/* Score rings */}
-        <div className="grid grid-cols-2 gap-2">
-          <div className="flex flex-col items-center gap-1">
+        <div className="grid grid-cols-2 gap-3">
+          <div className="flex flex-col items-center gap-1.5">
             <div className="label-caps">Sunrise</div>
             <ScoreRing score={day.sunriseScore} size="sm" />
-            <div className="text-[0.62rem] tabular-nums" style={{ color: "var(--text-muted)" }}>
+            <div className="text-[0.65rem] tabular-nums font-medium" style={{ color: "var(--text-muted)" }}>
               {formatTime(day.sunriseIso)}
             </div>
           </div>
-          <div className="flex flex-col items-center gap-1">
+          <div className="flex flex-col items-center gap-1.5">
             <div className="label-caps">Sunset</div>
             <ScoreRing score={day.sunsetScore} size="sm" />
-            <div className="text-[0.62rem] tabular-nums" style={{ color: "var(--text-muted)" }}>
+            <div className="text-[0.65rem] tabular-nums font-medium" style={{ color: "var(--text-muted)" }}>
               {formatTime(day.sunsetIso)}
             </div>
           </div>

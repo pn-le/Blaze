@@ -117,16 +117,19 @@ export function SearchPanel({
 
   return (
     <div
-      className="sticky top-[57px] z-40 glass border-b"
-      style={{ borderColor: "var(--border-subtle)" }}
+      className="sticky top-[57px] z-40 glass"
+      style={{
+        borderBottom: "1px solid rgba(45,63,87,0.4)",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
+      }}
     >
-      <div className="max-w-5xl mx-auto px-4 py-3">
+      <div className="max-w-5xl mx-auto px-4 py-3.5">
         <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-2">
           {/* Location input */}
           <div className="relative flex-1">
             <MapPin
               size={14}
-              className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+              className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
               style={{ color: "var(--text-muted)" }}
             />
             <input
@@ -135,18 +138,21 @@ export function SearchPanel({
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="Trail name, peak, or city..."
-              className="w-full pl-8 pr-3 py-2 rounded-lg text-sm outline-none border transition-colors"
+              className="w-full pl-9 pr-3 py-2.5 rounded-xl text-sm outline-none border transition-all"
               style={{
                 background: "var(--bg-input)",
                 color: "var(--text-primary)",
                 borderColor: "var(--border-default)",
+                boxShadow: "inset 0 1px 3px rgba(0,0,0,0.2)",
               }}
-              onFocus={(e) =>
-                (e.target.style.borderColor = "var(--border-active)")
-              }
-              onBlur={(e) =>
-                (e.target.style.borderColor = "var(--border-default)")
-              }
+              onFocus={(e) => {
+                e.target.style.borderColor = "var(--border-active)";
+                e.target.style.boxShadow = "inset 0 1px 3px rgba(0,0,0,0.2), 0 0 0 3px rgba(249,115,22,0.12)";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = "var(--border-default)";
+                e.target.style.boxShadow = "inset 0 1px 3px rgba(0,0,0,0.2)";
+              }}
             />
           </div>
 
@@ -156,22 +162,29 @@ export function SearchPanel({
             value={date}
             min={today}
             onChange={(e) => setDate(e.target.value)}
-            className="px-3 py-2 rounded-lg text-sm outline-none border"
+            className="px-3 py-2.5 rounded-xl text-sm outline-none border transition-colors"
             style={{
               background: "var(--bg-input)",
               color: "var(--text-primary)",
               borderColor: "var(--border-default)",
+              boxShadow: "inset 0 1px 3px rgba(0,0,0,0.2)",
             }}
           />
 
           {/* Elevation */}
-          <div className="flex rounded-lg overflow-hidden border" style={{ borderColor: "var(--border-default)" }}>
+          <div
+            className="flex rounded-xl overflow-hidden border"
+            style={{
+              borderColor: "var(--border-default)",
+              boxShadow: "inset 0 1px 3px rgba(0,0,0,0.2)",
+            }}
+          >
             <input
               type="number"
               value={elev}
               onChange={(e) => setElev(e.target.value)}
               placeholder="Summit elev."
-              className="w-28 px-3 py-2 text-sm outline-none"
+              className="w-28 px-3 py-2.5 text-sm outline-none"
               style={{
                 background: "var(--bg-input)",
                 color: "var(--text-primary)",
@@ -180,7 +193,7 @@ export function SearchPanel({
             <button
               type="button"
               onClick={() => setElevUnit(elevUnit === "ft" ? "m" : "ft")}
-              className="px-2 text-xs font-bold border-l transition-colors"
+              className="px-2.5 text-xs font-bold border-l cursor-pointer transition-colors hover:bg-white/5"
               style={{
                 background: "var(--bg-input)",
                 color: "var(--text-secondary)",
@@ -198,7 +211,7 @@ export function SearchPanel({
               onClick={handleGeolocate}
               disabled={geoLoading}
               aria-label="Use my location"
-              className="p-2 rounded-lg border transition-colors disabled:opacity-50"
+              className="p-2.5 rounded-xl border transition-all disabled:opacity-50 cursor-pointer hover:bg-white/5"
               style={{
                 background: "var(--bg-input)",
                 borderColor: "var(--border-default)",
@@ -211,10 +224,19 @@ export function SearchPanel({
             <button
               type="submit"
               disabled={loading || !location.trim()}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all disabled:opacity-50 cursor-pointer"
               style={{
-                background: "var(--border-active)",
+                background: "linear-gradient(135deg, #fb923c 0%, #f97316 50%, #ea580c 100%)",
                 color: "#fff",
+                boxShadow: "0 2px 12px rgba(249,115,22,0.35), inset 0 1px 0 rgba(255,255,255,0.15)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                  "0 4px 20px rgba(249,115,22,0.5), inset 0 1px 0 rgba(255,255,255,0.15)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                  "0 2px 12px rgba(249,115,22,0.35), inset 0 1px 0 rgba(255,255,255,0.15)";
               }}
             >
               <Search size={14} />
