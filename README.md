@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Blaze
 
-## Getting Started
+**Is the summit worth it?**
 
-First, run the development server:
+Blaze is a 7-day sunrise and sunset quality forecaster for hikers, trail runners, and peak baggers. Search any trail, mountain, or city and instantly get a scored forecast explaining exactly why the light will — or won't — be worth the climb.
+
+---
+
+## What it does
+
+Blaze pulls hourly weather data and calculates a 0–100 quality score for every sunrise and sunset over the next 7 days. The score accounts for:
+
+- **Cloud cover by altitude** — high wispy clouds scatter light beautifully; thick low clouds block it entirely
+- **Visibility** — haze and fog dramatically reduce color saturation at the horizon
+- **Precipitation probability** — rain chance at event time
+- **Humidity** — affects atmospheric diffusion and color intensity
+- **Wind speed** — a light breeze is ideal; high winds signal instability
+- **Aerosol optical depth** — dust and smoke in the atmosphere
+- **Barometric pressure trend** — rising pressure after a storm = golden light
+
+Scores are labeled: **Spectacular / Excellent / Good / Fair / Poor / Skip it**
+
+---
+
+## Features
+
+- 7-day grid of sunrise and sunset scores with color-coded rings
+- Detailed breakdown panel showing each scoring factor with a visual bar
+- Lightning risk assessment based on afternoon atmospheric instability (CAPE)
+- Summit conditions — temperature, wind, and feels-like at elevation
+- Best timing windows — optimal hour-by-hour window for the event
+- Moon phase display
+- Best months view for long-trip planning
+- Save trails locally for quick re-access
+- Share any forecast via URL (all state encoded in the hash)
+- PWA — installable, works offline for cached data
+
+---
+
+## Tech stack
+
+| Layer | Choice |
+|---|---|
+| Framework | Next.js 16 (App Router) + TypeScript |
+| Styling | Tailwind CSS v4 |
+| Data fetching | TanStack Query v5 |
+| Charts | Recharts |
+| State | Zustand |
+| Weather API | Open-Meteo (free, no API key needed) |
+| Testing | Vitest |
+
+---
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm test          # run unit tests
+npm run build     # production build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+No environment variables required — Blaze uses the free [Open-Meteo API](https://open-meteo.com) with no key.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Project structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/               Next.js App Router pages
+components/
+  forecast/        DayGrid, DayCard, DetailPanel, scoring UI
+  layout/          Header, SearchPanel, MyTrails
+  ui/              ScoreRing, ScoreBadge, CompassRose
+lib/               scoring, weather, astronomy, elevation, geo, ics
+hooks/             useWeatherQuery, useSunCalcs, useSavedTrails, useShareUrl
+types/             shared TypeScript types
+tests/             Vitest unit tests
+```
