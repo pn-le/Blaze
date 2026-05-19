@@ -12,6 +12,7 @@ import { useHashParams, buildShareUrl } from "@/hooks/useShareUrl";
 import type { SearchState, DayData } from "@/types";
 import { scoreLabel } from "@/lib/scoring";
 import { Mountain, Star, Share2, AlertCircle } from "lucide-react";
+import { NearbyPanel } from "@/components/layout/NearbyPanel";
 
 const SCORE_LEGEND = [
   { label: "Spectacular", color: "#f59e0b", emoji: "🔥" },
@@ -185,7 +186,9 @@ function BlazeApp() {
         defaultElevUnit={initUnit}
       />
 
-      <main className="relative max-w-5xl mx-auto px-4 py-6" style={{ zIndex: 1 }}>
+      <main className="relative max-w-6xl mx-auto px-4 py-6" style={{ zIndex: 1 }}>
+        <div className="flex gap-6 items-start">
+        <div className="flex-1 min-w-0">
         {/* Empty state */}
         {!search && !isLoading && (
           <div className="relative flex flex-col items-center justify-center py-24 text-center overflow-hidden">
@@ -364,6 +367,16 @@ function BlazeApp() {
             )}
           </div>
         )}
+        </div>
+          {search && (
+            <NearbyPanel
+              lat={search.lat}
+              lng={search.lng}
+              startDate={search.startDate}
+              onSearch={handleSearch}
+            />
+          )}
+        </div>
       </main>
     </div>
   );
